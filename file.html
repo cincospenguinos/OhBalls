@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<!--This is me goofing off with javascript. Maybe I'll make a version of Oh, Balls! later.-->
+<html>
+  <head>
+      <link type="text/css" rel="stylesheet" href="style/stylesheet.css"/>
+      <script type="text/javascript" src="ohballs.js"></script>
+      <script>
+       function Block(element, xPos, yPos, xLimit, yLimit){
+	   this.element = element;
+
+	   this.xVel = Math.random() * 10 % 3.0;
+	   this.yVel = Math.random() * 10 % 3.0;
+	   this.xLimit = xLimit;
+	   this.yLimit = yLimit;
+	   this.xPos = xPos;
+	   this.yPos = yPos;
+	   this.size = element.getBoundingClientRect().width;
+
+	   this.move = function(){
+	       this.xPos += this.xVel;
+	       this.yPos += this.yVel;
+
+	       this.element.style.left = this.xPos + 'px';
+	       this.element.style.top = this.yPos + 'px';
+
+	       if(this.xPos < 0 || this.xPos + this.size > this.xLimit)
+		   this.xVel = -this.xVel;
+	       if(this.yPos < 0 || this.yPos + this.size > this.yLimit)
+		   this.yVel = -this.yVel;
+	   }
+       }
+
+       var blocks = new Array();
+
+       function move(container, element){
+	   var rect = container.getBoundingClientRect();
+	   var collection = document.getElementsByClassName("block");
+
+	   for(var index = 0; index < collection.length; index++){
+	       blocks.push(new Block(collection[index], rect.left, rect.top, rect.width, rect.height));
+	   }
+	   
+	   function frame(){
+	       for(var i = 0; i < blocks.length; i++){
+		   blocks[i].move();
+	       }
+	   }
+
+	   var id = setInterval(frame, 10);
+       }
+
+       function addBlock(){
+	   var newBlock = document.createElement('div');
+	   newBlock.setAttribute('class', 'block');
+	   var parent = document.getElementById('space');
+	   parent.appendChild(newBlock);
+	   parent = parent.getBoundingClientRect();
+	   blocks.push(new Block(newBlock, parent.left, parent.top, parent.width, parent.height));
+	   document.getElementById('amount').innerHTML = blocks.length;
+       }
+      </script>
+  </head>
+  <body>
+      <div onclick="move(this, this.children[0])" id="space">
+	  <div class="block"></div>
+      </div>
+      <input onclick="addBlock()" type="button" title="Add another block" value="Add Block"/>
+      <p id="amount">1</p>
+  </body>
+</html>
