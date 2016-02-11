@@ -9,9 +9,10 @@ $(document).ready(function(){
 	function animate(){
 	    player.move();
 	    $('#player').css('left', player.xPos);
-	    $('#player').css('right', player.yPos);
+	    $('#player').css('top', player.yPos);
 	}
-	animationID = setInterval(animate, 10);
+
+	animationID = setInterval(animate, 17);
     });
 });
 
