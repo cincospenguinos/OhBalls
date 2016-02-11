@@ -1,19 +1,14 @@
 <!DOCTYPE HTML>
-<!--This is me goofing off with javascript. Maybe I'll make a version of Oh, Balls! later.-->
 <html>
   <head>
       <link type="text/css" rel="stylesheet" href="style/stylesheet.css"/>
+      <script type="text/javascript" src="javascript/model.js"></script>
       <script type="text/javascript" src="javascript/jquery.js"></script>
-      <script type="text/javascript" src="javascript/ohballs.js"></script>
-      <script>
-	
-      </script>
+      <script type="text/javascript" src="javascript/controller.js"></script>
   </head>
   <body>
-      <div onclick="move(this, this.children[0])" id="space">
-	  <div class="block"></div>
+      <div id="space" onkeydown="return(update(this))">
+	<div id="player"></div>
       </div>
-      <input onclick="addBlock()" type="button" title="Add another block" value="Add Block"/>
-      <p id="amount">1</p>
   </body>
 </html>
