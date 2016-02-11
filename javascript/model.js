@@ -8,37 +8,37 @@ function Player(xPos, yPos){
     this.move = function(){
 	switch(this.direction){
 	    case 0:
-	      this.xPos -= this.vel;
+	      this.yPos -= this.vel;
+	      console.log("Moving up");
 	      break;
 	    case 1:
-	      this.yPos -= this.vel;
+	      this.xPos += this.vel;
+	      console.log("Moving right");
 	      break;
 	    case 2:
-	      this.xPos += this.vel;
+	      this.yPos += this.vel;
+	      console.log("Moving down");
 	      break;
 	    case 3:
-	      this.yPos += this.vel;
+	      this.xPos -= this.vel;
+	      console.log("Moving left");
 	      break;
 	}
     };
 
     /* Changes the player's direction given the key code passed. */
     this.changeDirection = function(keyCode){
-	switch(keyCode){
-	    case 37:
-	      this.direction = 3;
-	      break;
-	    case 38:
-	      this.direction = 0;
-	      break;
-	    case 39:
-	      this.direction = 1;
-	      break;
-	    case 40:
-	      this.direction = 2;
-	      break;
-	}
+	if(keyCode >= 37 && keyCode <= 40){
+	    var providedDirection = (keyCode + 2) % 4;
 
-	console.log("Player direction is " + this.direction.toString());
+	    console.log("provided direction: " + providedDirection);
+	    if(providedDirection == this.direction){
+		this.vel += 0.5;
+		console.log("Same directions; added to velocity");
+	    } else {
+		console.log("Different directions; change directions");
+		this.direction = providedDirection;
+	    }
+	}
     };
 };
