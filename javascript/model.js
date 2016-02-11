@@ -31,7 +31,7 @@ function Player(xPos, yPos){
 	if(keyCode >= 37 && keyCode <= 40){
 	    var providedDirection = (keyCode + 2) % 4;
 
-	    console.log("provided direction: " + providedDirection);
+	    // TODO: Slowing down?
 	    if(providedDirection == this.direction){
 		this.vel += 0.5;
 		console.log("Same directions; added to velocity");
