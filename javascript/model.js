@@ -33,8 +33,16 @@ function Player(xPos, yPos){
 
 	    // TODO: Slowing down?
 	    if(providedDirection == this.direction){
-		this.vel += 0.5;
+		this.vel += 0.75;
 		console.log("Same directions; added to velocity");
+	    } else if (providedDirection % 2 == this.direction % 2){
+		this.vel -= 0.75;
+
+		if(this.vel < 0){
+		    this.vel = -this.vel;
+		    this.direction += 2;
+		    this.direction %= 4;
+		}
 	    } else {
 		console.log("Different directions; change directions");
 		this.direction = providedDirection;
