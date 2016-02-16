@@ -50,6 +50,10 @@ function moveEverything(){
 	playerElement.css('top', player.yPos);
 }
 
+/**
+ * Returns true if there is a collision
+ * @returns {boolean}
+ */
 function collision(){
 	var collision = false;
 
@@ -69,15 +73,42 @@ function collision(){
  * Starts the game. Contains all of the game logic.
  */
 function startGame(){
+	console.log('Starting a game.');
+
 	animationID = setInterval(function(){
 		moveEverything();
 
 		if(collision()){
 			clearInterval(animationID);
 
-			// TODO: Show game over stuff
+			// Shows the time and score
 			$('#timePlayed').append("<strong>Time:</strong> " + seconds + "." + (ticks * 1000) + " s");
 			$('#totalScore').append("<strong>Score:</strong> " + (balls.length * seconds + ticks).toString());
+
+			// Add the restart button
+			$('body').append('<div id="startGame">Restart</div>');
+
+			// Restarting the game
+			$('#startGame').unbind().click(function(){
+
+				for(var i = 0; i < ballElements.length; i++)
+					ballElements[i].remove();
+
+				player.xPos = 0;
+				player.yPos = 0;
+				player.vel = 0;
+
+				ticks = 0;
+				seconds = 0;
+				balls = [];
+				ballElements = [];
+
+				$('#timePlayed').text('');
+				$('#totalScore').text('');
+
+				startGame();
+				$('#startGame').remove();
+			});
 		}
 
 		if(++ticks === 60){
@@ -85,7 +116,7 @@ function startGame(){
 
 			if(++seconds % 10 === 0){
 				addBall();
-			} else if (seconds % 10 >= 7){
+			} else if (seconds % 10 > 7){
 				$('#originBox').css('background-color', 'red');
 			} else {
 				$('#originBox').css('background-color', 'white');
