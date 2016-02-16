@@ -43,24 +43,24 @@ function Player(xPos, yPos){
 
     /* Changes the player's direction given the key code passed. */
     this.changeDirection = function(keyCode){
-	if(keyCode >= 37 && keyCode <= 40){
-	    var providedDirection = (keyCode + 2) % 4;
+		if(keyCode >= 37 && keyCode <= 40){
+			var providedDirection = (keyCode + 2) % 4;
 
-	    if(providedDirection == this.direction){
-			this.vel += 0.75;
-			//console.log("Same directions; added to velocity");
-	    } else if (providedDirection % 2 == this.direction % 2){
-			this.vel -= 0.75;
+			if(providedDirection == this.direction){
+				this.vel += 0.75;
+				//console.log("Same directions; added to velocity");
+			} else if (providedDirection % 2 == this.direction % 2){
+				this.vel -= 0.75;
 
-			if(this.vel < 0){
-				this.vel = -this.vel;
-				this.direction += 2;
-				this.direction %= 4;
+				if(this.vel < 0){
+					this.vel = -this.vel;
+					this.direction += 2;
+					this.direction %= 4;
+				}
+			} else {
+				//console.log("Different directions; change directions");
+				this.direction = providedDirection;
 			}
-	    } else {
-			//console.log("Different directions; change directions");
-			this.direction = providedDirection;
-	    }
-	}
-    };
-};
+		}
+    }
+}
