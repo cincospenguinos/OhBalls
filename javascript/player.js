@@ -29,14 +29,16 @@ function Player(xPos, yPos){
 		if(this.xPos + 30 > xSize){// TODO: sizes?
 			this.xPos = 0;
 		} else if (this.xPos < 0){
-			this.xPos = xSize;
+			this.xPos = xSize - 30;
 		}
 
 		if(this.yPos + 30 > ySize){// TODO: sizes?
 			this.yPos = 0;
 		} else if (this.yPos < 0){
-			this.yPos = ySize;
+			this.yPos = ySize - 30;
 		}
+
+		//console.log('( ' + this.xPos + ', ' + this.yPos + ')');
     };
 
     /* Changes the player's direction given the key code passed. */

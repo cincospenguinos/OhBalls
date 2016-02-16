@@ -6,6 +6,7 @@ var ballElements = []; // The "view" balls - the elements that represent each of
 
 var animationID; // The animation ID
 
+/* Adds a ball to the game/DOM */
 function addBall(){
 	var ball = new Ball(300, 250);
 	var ballElement = $('<div class="ball"></div>');
