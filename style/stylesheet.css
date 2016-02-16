@@ -22,3 +22,31 @@
     position: absolute;
     border-radius: 100%;
 }
+
+#startGame {
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    border: 2px solid #bc6633;
+    width: 100px;
+    height: 30px;
+    background-color: #e58a37;
+    text-align: center;
+    color: white;
+    font-size: 22px;
+}
+
+#originBox {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #000;
+    background-color: white;
+    left: 250px;
+    top: 200px;
+}
+
+#scoreSpace {
+    text-align: center;
+    position: relative;
+}

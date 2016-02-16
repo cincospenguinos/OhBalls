@@ -5,7 +5,18 @@ var playerElement; // The "view" player - the element that the player belongs to
 var ballElements = []; // The "view" balls - the elements that represent each of the balls
 
 var animationID; // The animation ID
+var ticks = 0;
+var seconds = 0;
 
+/**
+ * Returns true if the two balls collide.
+ *
+ * @param ball1
+ * @param ball2
+ * @param diameter1
+ * @param diameter2
+ * @returns {boolean}
+ */
 function ballsCollide(ball1, ball2, diameter1, diameter2){
 	var xM1 = ball1.xPos + diameter1 / 2;
 	var yM1 = ball1.yPos + diameter1 / 2;
@@ -18,6 +29,71 @@ function ballsCollide(ball1, ball2, diameter1, diameter2){
 	var distance = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
 
 	return distance < (diameter1 / 2 + diameter2 / 2);
+}
+
+/**
+ * Moves everything in the game.
+ */
+function moveEverything(){
+	player.move(600, 500); // TODO: Adjustable sizes?
+
+	for(var i = 0; i < balls.length; i++){
+		var ball = balls[i];
+		var ballElement = ballElements[i];
+
+		ball.move(600, 500); // TODO: Adjustable sizes?
+		ballElement.css('left', ball.xPos);
+		ballElement.css('top', ball.yPos);
+	}
+
+	playerElement.css('left', player.xPos);
+	playerElement.css('top', player.yPos);
+}
+
+function collision(){
+	var collision = false;
+
+	for(var i = 0; i < balls.length; i++){
+		var ball = balls[i];
+
+		if(ballsCollide(ball, player, 50, 30)){
+			collision = true;
+			break;
+		}
+	}
+
+	return collision;
+}
+
+/**
+ * Starts the game. Contains all of the game logic.
+ */
+function startGame(){
+	animationID = setInterval(function(){
+		moveEverything();
+
+		if(collision()){
+			clearInterval(animationID);
+
+			// TODO: Show game over stuff
+			$('#timePlayed').append("<strong>Time:</strong> " + seconds + "." + (ticks * 1000) + " s");
+			$('#totalScore').append("<strong>Score:</strong> " + (balls.length * seconds + ticks).toString());
+		}
+
+		if(++ticks === 60){
+			ticks = 0;
+
+			if(++seconds % 10 === 0){
+				addBall();
+			} else if (seconds % 10 >= 7){
+				$('#originBox').css('background-color', 'red');
+			} else {
+				$('#originBox').css('background-color', 'white');
+			}
+		}
+	}, 17); // 60 fps
+
+	addBall();
 }
 
 /* Adds a ball to the game/DOM */
@@ -37,40 +113,8 @@ $(document).ready(function(){
 	playerElement = $('#player');
 
     $('#startGame').unbind().click(function(){
-		function animate(){
-			// Make everything move
-			player.move(600, 500); // TODO: Adjustable sizes?
-
-			for(var i = 0; i < balls.length; i++){
-				var ball = balls[i];
-				var ballElement = ballElements[i];
-
-				ball.move(600, 500); // TODO: Adjustable sizes?
-				ballElement.css('left', ball.xPos);
-				ballElement.css('top', ball.yPos);
-			}
-
-			// Now show that on screen for the player
-			playerElement.css('left', player.xPos);
-			playerElement.css('top', player.yPos);
-
-			// Now let's see what collides
-
-			for(var i = 0; i < balls.length; i++){
-				var ball = balls[i];
-
-				if(ballsCollide(ball, player, 50, 30)){
-					ballElements[i].css('background-color', 'red');
-				} else {
-					ballElements[i].css('background-color', 'darkgreen');
-				}
-			}
-		}
-
-		addBall();
-		//addBall();
-
-		animationID = setInterval(animate, 17);
+		startGame();
+		$('#startGame').remove();
     });
 });
 
