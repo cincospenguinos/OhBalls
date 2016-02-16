@@ -2,13 +2,15 @@
 <html>
   <head>
       <link type="text/css" rel="stylesheet" href="style/stylesheet.css"/>
-      <script type="text/javascript" src="javascript/model.js"></script>
+      <script type="text/javascript" src="javascript/player.js"></script>
+      <script type="text/javascript" src="javascript/ball.js"></script>
       <script type="text/javascript" src="javascript/jquery.js"></script>
       <script type="text/javascript" src="javascript/controller.js"></script>
+      <title>Oh, Balls!</title>
   </head>
   <body>
-      <div id="space" onkeydown="return(update(this))">
-	<div id="player"></div>
+      <div id="space">
+          <div id="player"></div>
       </div>
       <input type="button" id="startGame" value="Click here to start!"/>
   </body>
