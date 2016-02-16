@@ -64,3 +64,4 @@ function Player(xPos, yPos){
 	}
     };
 };
+

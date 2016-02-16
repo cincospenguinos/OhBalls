@@ -22,3 +22,4 @@ function Ball(xPos, yPos){
         }
     };
 }
+
