@@ -122,3 +122,4 @@ $(document).ready(function(){
 $(document).on('keydown', function (e) {
     player.changeDirection(e.keyCode);
 });
+

@@ -20,5 +20,5 @@ function Ball(xPos, yPos){
         } else if (this.yPos < 0){
             this.yPos = ySize - 50;
         }
-    };
+    }
 }
