@@ -69,6 +69,19 @@ function collision(){
 	return collision;
 }
 
+// TODO: Death animation
+function deathAnimation(){
+	var count = 0;
+	var animID = setInterval(function(){
+
+		var color = '#FF00' + count.toString();
+		$('.ball').css('background-color', color);
+
+		if(count === 100)
+			clearInterval(animID);
+	}, 17);
+}
+
 /**
  * Starts the game. Contains all of the game logic.
  */
@@ -81,9 +94,12 @@ function startGame(){
 		if(collision()){
 			clearInterval(animationID);
 
+			// Run an animation here
+			deathAnimation();
+
 			// Shows the time and score
 			$('#timePlayed').append("<strong>Time:</strong> " + seconds + "." + (ticks * 1000) + " s");
-			$('#totalScore').append("<strong>Score:</strong> " + (balls.length * seconds + ticks).toString());
+			$('#totalScore').append("<strong>Score:</strong> " + (balls.length * seconds + ticks / 30).toString());
 
 			// Add the restart button
 			$('body').append('<div id="startGame">Restart</div>');
@@ -122,7 +138,7 @@ function startGame(){
 				$('#originBox').css('background-color', 'white');
 			}
 		}
-	}, 17); // 60 fps
+	}, 17);
 
 	addBall();
 }
