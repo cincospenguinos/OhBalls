@@ -105,8 +105,10 @@ function calculateScore(){
 	var score = time * balls.length * totalVelocity;
 	score -= 15 * (Math.pow(balls.length, 2) - balls.length) / 2;
 
+	var avgVelocity = totalVelocity / balls.length;
+
 	log.append("<tr><td>" + trials.toString() + "</td><td>" + balls.length.toString() + "</td><td>" + totalVelocity +
-		"</td><td>" + time + "</td><td>" + score.toString() + "</td></tr>");
+		"</td><td>" + avgVelocity + "</td><td>" + time + "</td><td>" + score.toString() + "</td></tr>");
 
 	trials++;
 
@@ -136,7 +138,6 @@ function startGame(){
 			var score = calculateScore();
 
 			// Shows the time and score
-			// TODO: Figure out a better way to calculate the score
 			$('#timePlayed').append("<strong>Time:</strong> " + seconds + "." + (ticks * 1000) + " s");
 			$('#totalScore').append("<strong>Score:</strong> " + score.toString());
 
@@ -148,6 +149,8 @@ function startGame(){
 
 				for(var i = 0; i < ballElements.length; i++)
 					ballElements[i].remove();
+
+				playerMoves = [];
 
 				player.xPos = 0;
 				player.yPos = 0;

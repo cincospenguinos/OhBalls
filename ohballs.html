@@ -10,6 +10,18 @@
       <script type="text/javascript" src="javascript/controls.min.js"></script>
       <title>Oh, Balls!</title>
   </head>
+  <!--
+    NOTES:
+
+    * The score stuff seems pretty much worked out. I think I like the function I have, as it seems to be the most
+      fair. It takes into account the velocity of the balls, as well as how many you have and how long you lasted.
+      A game with four really slow balls is much easier than a game with two really fast ones.
+    * Consider making a RESTful service with this and deploying it to do all the playtesting. Just have an open node
+      that takes in all the data in the debug section and pushes it to a database. It should be really simple to do
+      using Sinatra. Then post the game all over the place and see how it ends up working out.
+    * A local and global multiplayer version would be kinda cool.
+    * Consider making all the balls bounce instead of moving to the other side super fast.
+  -->
   <body>
       <div id="space">
           <div id="originBox"></div>
@@ -27,6 +39,8 @@
               <option value="2">Option 2</option>
           </select>
       </div>-->
-      <table id='log'><th>Trial</th><th>Balls</th><th>Total Velocity</th><th>Time</th><th>Score</th></table>
+      <table id='log'><th>Trial</th><th>Balls</th><th>Total Velocity</th>
+          <th>Average Velocity</th><th>Time</th>
+          <th>Score</th></table>
   </body>
 </html>
