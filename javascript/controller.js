@@ -8,6 +8,9 @@ var animationID; // The animation ID
 var ticks = 0;
 var seconds = 0;
 var playerMoves = [];
+var trials = 1;
+
+var log;
 
 /**
  * Returns true if the two balls collide.
@@ -83,12 +86,41 @@ function deathAnimation(){
 }
 
 /**
+ * Returns the score
+ */
+function calculateScore(){
+	/*
+	x = number of seconds + ticks / 60, y = score, b = # of balls at death, and v = total velocity of all the balls:
+	y = xbv - 15(b^2-b) / 2
+	 */
+	var totalVelocity = 0;
+	var time = seconds + (ticks / 60);
+
+	for(var i = 0; i < balls.length; i++){
+		var b = balls[i];
+		//console.log(b.toString());
+		totalVelocity += Math.abs(b.xVel) + Math.abs(b.yVel);
+	}
+
+	var score = time * balls.length * totalVelocity;
+	score -= 15 * (Math.pow(balls.length, 2) - balls.length) / 2;
+
+	log.append("<tr><td>" + trials.toString() + "</td><td>" + balls.length.toString() + "</td><td>" + totalVelocity +
+		"</td><td>" + time + "</td><td>" + score.toString() + "</td></tr>");
+
+	trials++;
+
+	return score;
+}
+
+/**
  * Starts the game. Contains all of the game logic.
  */
 function startGame(){
 	console.log('Starting a game.');
 
 	animationID = setInterval(function(){
+		// First adjust the model as the player has input
 		if(playerMoves.length > 0)
 			player.changeDirection(playerMoves.shift());
 
@@ -100,10 +132,13 @@ function startGame(){
 			// Run an animation here
 			deathAnimation();
 
+			// Calculate score
+			var score = calculateScore();
+
 			// Shows the time and score
-			// TODO: Figure out a better way to present score
+			// TODO: Figure out a better way to calculate the score
 			$('#timePlayed').append("<strong>Time:</strong> " + seconds + "." + (ticks * 1000) + " s");
-			$('#totalScore').append("<strong>Score:</strong> " + (balls.length * seconds + ticks / 30).toString());
+			$('#totalScore').append("<strong>Score:</strong> " + score.toString());
 
 			// Add the restart button
 			$('body').append('<div id="startGame">Restart</div>');
@@ -167,13 +202,14 @@ $(document).ready(function(){
 		startGame();
 		$('#startGame').remove();
     });
+
+	log = $('#log')
 });
 
 // Manage each of the key pressed events here
 $(document).on('keydown', function (e) {
 	// Instead of letting the player have access to the model all willy nilly, we will put their actions in a queue and then
 	// we will execute them one by one
-	playerMoves.push(e);
-    //player.changeDirection(e.keyCode);
+	playerMoves.push(e.keyCode);
 });
 
