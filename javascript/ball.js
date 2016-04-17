@@ -9,16 +9,20 @@ function Ball(xPos, yPos){
         this.yPos += this.yVel;
 
         // Check the edges
-        if(this.xPos + 50 > xSize){// TODO: sizes?
-            this.xPos = 0;
+        if(this.xPos + 50 > xSize){
+            //this.xPos = 0;
+            this.xVel = -this.xVel;
         } else if (this.xPos < 0){
-            this.xPos = xSize - 50;
+            //this.xPos = xSize - 50;
+            this.xVel = -this.xVel;
         }
 
-        if(this.yPos + 50 > ySize){// TODO: sizes?
-            this.yPos = 0;
+        if(this.yPos + 50 > ySize){
+            //this.yPos = 0;
+            this.yVel = -this.yVel;
         } else if (this.yPos < 0){
-            this.yPos = ySize - 50;
+            //this.yPos = ySize - 50;
+            this.yVel = -this.yVel;
         }
     }
 }
