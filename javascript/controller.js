@@ -7,6 +7,7 @@ var ballElements = []; // The "view" balls - the elements that represent each of
 var animationID; // The animation ID
 var ticks = 0;
 var seconds = 0;
+var playerMoves = [];
 
 /**
  * Returns true if the two balls collide.
@@ -49,7 +50,6 @@ function moveEverything(){
 	playerElement.css('left', player.xPos);
 	playerElement.css('top', player.yPos);
 }
-
 /**
  * Returns true if there is a collision
  * @returns {boolean}
@@ -89,6 +89,9 @@ function startGame(){
 	console.log('Starting a game.');
 
 	animationID = setInterval(function(){
+		if(playerMoves.length > 0)
+			player.changeDirection(playerMoves.shift());
+
 		moveEverything();
 
 		if(collision()){
@@ -98,6 +101,7 @@ function startGame(){
 			deathAnimation();
 
 			// Shows the time and score
+			// TODO: Figure out a better way to present score
 			$('#timePlayed').append("<strong>Time:</strong> " + seconds + "." + (ticks * 1000) + " s");
 			$('#totalScore').append("<strong>Score:</strong> " + (balls.length * seconds + ticks / 30).toString());
 
@@ -167,6 +171,9 @@ $(document).ready(function(){
 
 // Manage each of the key pressed events here
 $(document).on('keydown', function (e) {
-    player.changeDirection(e.keyCode);
+	// Instead of letting the player have access to the model all willy nilly, we will put their actions in a queue and then
+	// we will execute them one by one
+	playerMoves.push(e);
+    //player.changeDirection(e.keyCode);
 });
 
